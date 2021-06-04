@@ -1,0 +1,25 @@
+{
+  "name": "blockchain",
+  "version": "1.0.0",
+  "description": "Sistema de blockchain básico em JS para o porgrama de formação da IV",
+  "main": "main.js",
+  "dependencies": {
+    "crypto-js": "^4.0.0"
+  },
+  "devDependencies": {
+    "jest": "^27.0.4"
+  },
+  "scripts": {
+    "test": "yarn jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/IgorDeo/JSBlockchain.git"
+  },
+  "author": "Igor Deo e André Relíquias",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/IgorDeo/JSBlockchain/issues"
+  },
+  "homepage": "https://github.com/IgorDeo/JSBlockchain#readme"
+}
