@@ -1,23 +1,22 @@
-const  SHA256 = require('crypto-js/sha256');
+const SHA256 = require('crypto-js/sha256');
 
-class Block{
-    
-    constructor(index, data, previousHash = "", timeStamp){
+class Block {
+
+    constructor(index, data, timeStamp) {
         this.data = data;
-        this.previousHash = previousHash;
         this.timeStamp = timeStamp;
         this.index = index;
         this.hash = "";
         this.nonce = 0;
     }
 
-    calculateBlockHash(){
+    calculateBlockHash() {
         let dataToHash = this.index + this.previousHash + this.timeStamp + JSON.stringify(this.data) + this.nonce.toString();
         return SHA256(dataToHash).toString();
     }
 
-    mineBlock(difficulty){
-        while(this.hash.substring(0, difficulty) !== Array(difficulty+1).join("0")){
+    mineBlock(difficulty) {
+        while (this.hash.substring(0, difficulty) !== Array(difficulty + 1).join("0")) {
             this.nonce++;
             this.hash = this.calculateBlockHash();
         }
@@ -25,36 +24,36 @@ class Block{
 
 }
 
-class Blockchain{
-    constructor(){
+class Blockchain {
+    constructor() {
         this.chain = [this.createGenesisBlock()];
         this.difficulty = 4;
     }
 
-    createGenesisBlock(){
+    createGenesisBlock() {
         return new Block(0, "25/05/2021", "Genesis block", "0");
     }
 
-    getLatestBlock(){
+    getLatestBlock() {
         return this.chain[this.chain.length - 1];
     }
 
-    addBlock(newBlock){
+    addBlock(newBlock) {
         newBlock.previousHash = this.getLatestBlock().hash;
         newBlock.mineBlock(this.difficulty);
         this.chain.push(newBlock)
     }
 
-    isChainValid(){
-        for(let i = 1; i < this.chain.length; i++){
+    isChainValid() {
+        for (let i = 1; i < this.chain.length; i++) {
             const currentBlock = this.chain[i];
-            const previousBlock = this.chain[i-1];
+            const previousBlock = this.chain[i - 1];
 
-            if(currentBlock.hash !== currentBlock.calculateBlockHash()){
+            if (currentBlock.hash !== currentBlock.calculateBlockHash()) {
                 return false;
             }
 
-            if(currentBlock.previousHash !== previousBlock.hash){
+            if (currentBlock.previousHash !== previousBlock.hash) {
                 return false;
             }
         }
@@ -64,25 +63,26 @@ class Blockchain{
 
 let igorCoin = new Blockchain();
 
-console.log("Quantidade de zeros: "+igorCoin.difficulty);
+console.log("Quantidade de zeros: " + igorCoin.difficulty);
 
-let mine1 = Date.now();
 
-igorCoin.addBlock(new Block(1, "21/05/2021", {amount: 50}))
+// console.log("ANTES DE MINERAR O PRIMEIRO BLOCO\n", JSON.stringify(igorCoin, null, 4));
+igorCoin.addBlock(new Block(1, "21/05/2021", { amount: 50 }))
+    // console.log(igorCoin.getLatestBlock().nonce)
+    // console.log("APOS MINERAR O PRIMEIRO BLOCO\n", JSON.stringify(igorCoin, null, 4));
 
-let finish1 = Date.now();
+// igorCoin.chain.pop();
 
-let elepsedTime = ((finish1 - mine1)/60000);
-console.log("Tempo decorrido para mineração do bloco 1: " + elepsedTime + " minutos");
+// console.log('APOS APAGAR O BLOCO MINERADO\n', JSON.stringify(igorCoin, null, 4));
 
-let mine2 = Date.now();
+// igorCoin.addBlock(new Block(1, "21/05/2021", { amount: 50 }))
+// console.log(igorCoin.getLatestBlock().nonce)
 
-igorCoin.addBlock(new Block(2, "21/05/2021", {amount: 500}))
-
-let finish2 = Date.now();
-
-let elepsedTime2 = ((finish2 - mine2)/60000);
-console.log("Tempo decorrido para mineração do bloco 2: " + elepsedTime2 + " minutos");
+// console.log('APOS MINERAR O MESMO BLOCO\n', JSON.stringify(igorCoin, null, 4));
 
 // console.log(JSON.stringify(igorCoin, null, 4))
+igorCoin.addBlock(new Block(2, "21/05/2021", { amount: 50 }))
 
+console.log(igorCoin.isChainValid());
+igorCoin.chain[1].data = "aaaaaa";
+console.log(igorCoin.isChainValid());

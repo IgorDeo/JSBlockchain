@@ -1,5 +1,5 @@
 const blockchain = require('./Blockchain.js').Blockchain;
-const block = require('./Blockchain.js').Block;
+const block = require('./Block.js').Block;
 const express = require('express');
 const app = express();
 const port = 3000;
@@ -19,6 +19,7 @@ app.get('/mine_block', (req, res) => {
     let dataFill = {
         value: data
     }
+
     let response = newBlockchain.addBlock(new block(dataFill, date, parseInt(difficulty)));
     res.send({ response });
 });
