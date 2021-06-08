@@ -20,7 +20,7 @@ class Blockchain {
         newBlock.previousHash = this.getLatestBlock().hash;
         newBlock.mineBlock();
         this.chain.push(newBlock);
-        // return newBlock;
+        return newBlock;
     }
 
     isChainValid() {
