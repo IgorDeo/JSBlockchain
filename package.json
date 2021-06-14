@@ -1,7 +1,7 @@
 {
     "name": "blockchain",
     "version": "1.0.0",
-    "description": "Sistema de blockchain básico em JS para o porgrama de formação da IV",
+    "description": "Sistema de blockchain básico em JS para o programa de formação da IVT",
     "main": "main.js",
     "dependencies": {
         "crypto-js": "^4.0.0",

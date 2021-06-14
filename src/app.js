@@ -10,17 +10,16 @@ app.get('/is_chain_valid', (req, res) => {
     res.send(newBlockchain.isChainValid());
 });
 
-//localhost:3000/mine_block?data=example&date=07/06/2021&difficulty=4
+//localhost:3000/mine_block?data=example&difficulty=4
 app.get('/mine_block', (req, res) => {
     let data = req.query.data;
-    let date = req.query.date;
     let difficulty = req.query.difficulty;
 
     let dataFill = {
         value: data
     }
 
-    let response = newBlockchain.addBlock(new block(dataFill, date, parseInt(difficulty)));
+    let response = newBlockchain.addBlock(new block(dataFill, parseInt(difficulty)));
     res.send({ response });
 });
 
