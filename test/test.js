@@ -1,17 +1,23 @@
-// const expect = require('chai').expect;
 const blockchain = require('../src/Blockchain.js').Blockchain;
 const block = require('../src/Block.js').Block;
 
-//
-
-let blockchainTest = new blockchain();
-let blockTest = new block({ amount: 100, receiver: "André", payer: "Igor" }, '08/06/2021', 3);
-
+// Inserir um before com callback para declarar os blocos
+// Ficar atento as dependências se estão no ambiente certo
+// Sempre especificar nos testes oq quero rodar (jest .test/**/**_test.js)
+// Nao colocar output nos testes
+// Nome dos arquivos de classe todos minúsculos
 
 describe('Blockchain JS', () => {
+    let blockchainTest;
+    let blockTest;
+
+    beforeAll(() => {
+        blockchainTest = new blockchain();
+        blockTest = new block({ amount: 100, receiver: "André", payer: "Igor" }, 3);
+    });
+
     describe('when mining a block works', () => {
         it('the prefix of the hash must have the same amount of zeros as the difficulty', () => {
-
             blockchainTest.addBlock(blockTest);
             const block = blockchainTest.chain[1];
             const result = block.hash.substring(0, block.difficulty) == Array(block.difficulty + 1).join("0");
