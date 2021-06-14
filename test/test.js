@@ -1,12 +1,6 @@
 const blockchain = require('../src/Blockchain.js').Blockchain;
 const block = require('../src/Block.js').Block;
 
-// Inserir um before com callback para declarar os blocos
-// Ficar atento as dependências se estão no ambiente certo
-// Sempre especificar nos testes oq quero rodar (jest .test/**/**_test.js)
-// Nao colocar output nos testes
-// Nome dos arquivos de classe todos minúsculos
-
 describe('Blockchain JS', () => {
     let blockchainTest;
     let blockTest;
