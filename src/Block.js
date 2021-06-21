@@ -18,7 +18,7 @@ class Block {
     }
 
     mineBlock() {
-        this.timeStamp = Date.now();
+        this.timeStamp = Date.now(); 
         while (this.hash.substring(0, this.difficulty) !== Array(this.difficulty + 1).join("0")) {
             this.nonce++;
             this.hash = this.calculateBlockHash();
