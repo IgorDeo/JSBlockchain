@@ -1,3 +1,2 @@
-node_modules/
-src/main.js
-src/app.js
+node_modules
+build

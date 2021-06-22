@@ -1,50 +1,62 @@
-const path = require("path")
-const webpack = require("webpack")
-const HtmlWebpackPlugin = require("html-webpack-plugin")
-//const MiniCssExtractPlugin = require("mini-css-extract-plugin")
-//const { CleanWebpackPlugin } = require("clean-webpack-plugin")
-// const CopyPlugin = require("copy-webpack-plugin")
-// const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
+// Generated using webpack-cli https://github.com/webpack/webpack-cli
+
+const path = require("path");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+
+const isProduction = process.env.NODE_ENV == "production";
+
+const stylesHandler = MiniCssExtractPlugin.loader;
+
 const srcDir        = path.join(__dirname,"./src")
 const distDir       = path.join(__dirname,"./build") // pode usar a dist
 const entry         = path.join(srcDir, "scripts/index.js" )
 const srcHtmlLayout = path.join(__dirname, "./src/views/index.html")
-module.exports = {
-  mode: process.env.NODE_ENV || "development",
-  target: "web",
-  entry: {
-    main: entry // ./src/index.js
-  },
+
+
+const config = {
+  entry: entry,
+  target: "node",
   output: {
     filename: "bundle.js",
-    path: distDir
+    path: distDir,
+    library: "my-library",
+    libraryTarget: "umd"
   },
-  resolve: {
-    extensions: [".js", ".jsx", ".json"],
-    modules: [ "node_modules", srcDir ],
-    alias: {
-      "react-dom": "@hot-loader/react-dom"
-    }
+  devServer: {
+    open: true,
+    host: "localhost",
   },
   plugins: [
     new HtmlWebpackPlugin({
       template: srcHtmlLayout,
       chunksSortMode: "none"
     }),
-/*
-    new webpack.optimize.ModuleConcatenationPlugin(),
-    new BundleAnalyzerPlugin(),
-    new CleanWebpackPlugin(),
-    new MiniCssExtractPlugin({
-      // Options similar to the same options in webpackOptions.output
-      // both options are optional
-      filename: "[name].css"
-    }),
-    new CopyPlugin([
-      { from: "./public/", to: "assets/" },
-    ])
-*/
+
+    new MiniCssExtractPlugin(),
+
+    // Add your plugins here
+    // Learn more about plugins from https://webpack.js.org/configuration/plugins/
   ],
+//   module: {
+//     rules: [
+//       {
+//         test: /\.(js|jsx)$/i,
+//         loader: "babel-loader",
+//       },
+//       {
+//         test: /\.css$/i,
+//         use: [stylesHandler, "css-loader"],
+//       },
+//       {
+//         test: /\.(eot|svg|ttf|woff|woff2|png|jpg|gif)$/i,
+//         type: "asset",
+//       },
+
+//       // Add your rules for custom modules here
+//       // Learn more about loaders from https://webpack.js.org/loaders/
+//     ],
+//   },
   module: {
     rules: [
       {
@@ -60,4 +72,13 @@ module.exports = {
     hot: true,
     inline: true,
   }
-}
+};
+
+module.exports = () => {
+  if (isProduction) {
+    config.mode = "production";
+  } else {
+    config.mode = "development";
+  }
+  return config;
+};
