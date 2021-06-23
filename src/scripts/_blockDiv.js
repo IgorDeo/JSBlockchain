@@ -9,6 +9,7 @@ const blockDiv = (block) => {
                 <div>
                     <label>Data: </label>
                     <input class="data-input-block" type="text"  value="${block.data.value}">
+                    
                 </div>
 
                 <div>
@@ -18,7 +19,7 @@ const blockDiv = (block) => {
 
                 <div>
                     <label>Hash: </label>
-                    <input class="hash-input-block" type="text" disabled value="${block.hash}">
+                    <input class="hash-input-block-valid" type="text" disabled value="${block.hash}">
                 </div>
 
                 <div>
