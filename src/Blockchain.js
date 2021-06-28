@@ -7,9 +7,12 @@ class Blockchain {
     }
 
     createGenesisBlock() {
-        return new block({
+        let newBlock = new block({
             value: 'Genesis block'
-        }, "25/05/2021", "0");
+        }, "0");
+
+        newBlock.timeStamp = Date.now();
+        return newBlock;
     }
 
     getLatestBlock() {
