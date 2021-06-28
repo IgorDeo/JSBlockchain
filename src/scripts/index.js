@@ -1,25 +1,22 @@
-import {Block} from "../Block.js"
-import {Blockchain} from "../Blockchain.js"
-import blockDiv from "./_blockDiv"
+import { Block } from "../Block.js";
+import { Blockchain } from "../Blockchain.js";
+import blockDiv from "./_blockDiv";
 import createMineButton from "./_mineButton.js";
 
 const blockchain = new Blockchain();
-
 
 const newBlockButton = document.getElementById("new-block-button");
 const inputData = document.getElementById("fdata");
 const inputDifficulty = document.getElementById("fdifficulty");
 const divBlocks = document.getElementById('blocks-div');
-const mineBlockButton = document.getElementsByClassName("mine-block-button")
 
-const genesisBlock = blockchain.chain[0]
-console.log(JSON.stringify(genesisBlock, null, 0));
-
+const genesisBlock = blockchain.chain[0];
+// console.log(JSON.stringify(genesisBlock, null, 0));
 
 newBlockButton.onclick = (event) => {
     event.preventDefault(); //Evita o reload da pagina
-    if(inputData.value && inputDifficulty.value){
-        console.log(`Dados: ${inputData.value} Dificuldade: ${inputDifficulty.value}`);
+    if (inputData.value && inputDifficulty.value) {
+        // console.log(`Criando novo bloco, Dados: ${inputData.value}, Dificuldade: ${inputDifficulty.value}`);
         let obj = {
             value: inputData.value
         }
@@ -31,85 +28,106 @@ newBlockButton.onclick = (event) => {
     }
 };
 
-function invalidateBlock(blockIndexStr) {
-    const blockIndex = parseInt(blockIndexStr)
-
-    const block = blockchain.chain[blockIndex];
-
-    const invalidateBlockDiv = document.getElementById(`block-${blockIndex}`)
-    const hashInput = document.getElementById(`block-${blockIndex}`).getElementsByClassName("hash-input-block-valid")[0]
-
-    hashInput.className = "hash-input-block-invalid"
-
-    invalidateBlockDiv.innerHTML += createMineButton(block)
-}
-
-
-
-const createBlockDiv = (block) =>{
+const createBlockDiv = (block) => {
     let wrapperDiv = document.createElement("div");
     wrapperDiv.className = "block";
-    wrapperDiv.id = `block-${block.index}`
-    wrapperDiv.innerHTML += blockDiv(block)
+    wrapperDiv.id = `block-${block.index}`;
+    wrapperDiv.innerHTML += blockDiv(block);
 
     divBlocks.appendChild(wrapperDiv);
     createEventListener();
 }
 
-
-const createEventListener = () =>{
+const createEventListener = () => {
     const elements = document.querySelectorAll('.block');
     // adding the event listener by looping
     elements.forEach(element => {
-        const blockId = element.id
-        const blockIndex = parseInt(blockId[blockId.length-1])
+        const blockId = element.id;
+        const blockIndex = parseInt(blockId[blockId.length - 1]);
         const inputDataBlock = element.getElementsByClassName('data-input-block')[0];
-        console.log('andre');
+        const mineButton = element.getElementsByClassName('mine-block-button')[0];
 
-        inputDataBlock.addEventListener('change', (e)=>{   
-            invalidateBlock(blockIndex);
-            const newData = e.currentTarget.value
-            e.target.value = newData;
-        })
+        inputDataBlock.addEventListener('change', (e) => {
+            blockchain.chain[blockIndex].data.value = e.target.value;
+            // let newHash = blockchain.chain[blockIndex].calculateBlockHash();
+            // blockchain.chain[blockIndex].hash = newHash;
 
-        console.log('1')
+            invalidateChain(blockIndex);
+        });
+
+        if (mineButton !== undefined) {
+            mineButton.onclick = (event) => {
+                event.preventDefault();
+                validadeBlock(blockIndex);
+            }
+        }
     });
 }
 
+function invalidateBlock(blockIndexStr) {
+    const blockIndex = parseInt(blockIndexStr);
+    const block = blockchain.chain[blockIndex];
+    const invalidateBlockDiv = document.getElementById(`block-${blockIndex}`);
+    let previousHash = document.getElementById(`block-${blockIndex}`).getElementsByClassName("phash-input-block")[0];
 
-createBlockDiv(genesisBlock)
+    let hashInput = document.getElementById(`block-${blockIndex}`).getElementsByClassName("hash-input-block-valid")[0];
+    if (hashInput === undefined) {
+        hashInput = document.getElementById(`block-${blockIndex}`).getElementsByClassName("hash-input-block-invalid")[0];
+    }
+    hashInput.className = "hash-input-block-invalid";
+    previousHash.value = block.previousHash;
+    hashInput.value = block.hash;
 
+    let invalidButton = document.getElementById(`block-${blockIndex}`).getElementsByClassName("mine-block-button")[0];
+    if (invalidButton === undefined) {
+        // invalidateBlockDiv.innerHTML += createMineButton(block);
+        const divButton = document.createElement("div");
+        divButton.className = "wrapper-mine-button";
+        divButton.innerHTML += createMineButton(block);
+        invalidateBlockDiv.appendChild(divButton);
+    }
 
+    createEventListener();
+}
 
+function validadeBlock(blockIndexStr) {
+    const blockIndex = parseInt(blockIndexStr);
+    const block = blockchain.chain[blockIndex];
 
+    let hashInput = document.getElementById(`block-${blockIndex}`).getElementsByClassName("hash-input-block-invalid")[0];
+    hashInput.className = "hash-input-block-valid";
 
+    let nonceInput = document.getElementById(`block-${blockIndex}`).getElementsByClassName("nonce-input-block")[0];
+    if (blockIndex == 0) {
+        block.hash = block.calculateBlockHash();
+    } else {
+        block.mineBlock();
+    }
 
-function updateState(block, chain) {
-    // set the well background red or green for this block
-    if (block.hash.substring(0, this.difficulty) === Array(this.difficulty + 1).join("0")){
-        // set the hash input, inside the block div id, class to hash-input-block-valid 
-    } 
-      
-    else {
-      // set the hash input, inside the block div id, class to hash-input-block-invalid 
+    hashInput.value = block.hash;
+    nonceInput.value = block.nonce;
+
+    if (blockIndex != blockchain.chain.length - 1) {
+        invalidateChain(blockIndex + 1);
+    }
+
+    let invalidButtonWrapper = document.getElementById(`block-${blockIndex}`).getElementsByClassName("wrapper-mine-button")[0];
+    document.getElementById(`block-${blockIndex}`).removeChild(invalidButtonWrapper);
+    createEventListener();
+}
+
+function invalidateChain(blockIndex) {
+    for (let index = blockIndex; index <= blockchain.chain.length - 1; index++) {
+        if (index == 0) {
+            blockchain.chain[index].previousHash = "";
+        } else {
+            blockchain.chain[index].previousHash = blockchain.chain[index - 1].hash;
+        }
+
+        let newHash = blockchain.chain[index].calculateBlockHash();
+        blockchain.chain[index].hash = newHash;
+        invalidateBlock(index);
     }
 }
-  
-  
-  function updateHash(block, chain) {
-    // update the SHA256 hash value for this block
-    $('#block'+block+'chain'+chain+'hash').val(sha256(block, chain));
-    block.calculateBlockHash()
-    updateState(block, chain);
-  }
-  
-  function updateChain(block, chain) {
-    // update all blocks walking the chain from this block to the end
-    for (var x = block; x <= 5; x++) {
-      if (x > 1) {
-        $('#block'+x+'chain'+chain+'previous').val($('#block'+(x-1).toString()+'chain'+chain+'hash').val());
-      }
-      updateHash(x, chain);
-    }
-  }
-  
+
+createBlockDiv(genesisBlock);
