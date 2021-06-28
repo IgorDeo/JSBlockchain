@@ -5,19 +5,15 @@ import createMineButton from "./_mineButton.js";
 
 const blockchain = new Blockchain();
 
-
-const buttonElement = document.getElementById("new-block-button");
+const newBlockButton = document.getElementById("new-block-button");
 const inputData = document.getElementById("fdata");
 const inputDifficulty = document.getElementById("fdifficulty");
 const divBlocks = document.getElementById('blocks-div');
 
-const genesisBlock = blockchain.chain[0]
-console.log(JSON.stringify(genesisBlock, null, 0));
-
 const genesisBlock = blockchain.chain[0];
 // console.log(JSON.stringify(genesisBlock, null, 0));
 
-buttonElement.onclick = (event) => {
+newBlockButton.onclick = (event) => {
     event.preventDefault(); //Evita o reload da pagina
     if (inputData.value && inputDifficulty.value) {
         // console.log(`Criando novo bloco, Dados: ${inputData.value}, Dificuldade: ${inputDifficulty.value}`);
@@ -39,6 +35,7 @@ const createBlockDiv = (block) => {
     wrapperDiv.innerHTML += blockDiv(block);
 
     divBlocks.appendChild(wrapperDiv);
+    createEventListener();
 }
 
 const createEventListener = () => {
