@@ -11,7 +11,7 @@ const inputData = document.getElementById("fdata");
 const inputDifficulty = document.getElementById("fdifficulty");
 const divBlocks = document.getElementById('blocks-div');
 
-const genesisBlock = blockchain.chain[0]
+
 console.log(JSON.stringify(genesisBlock, null, 0));
 
 const genesisBlock = blockchain.chain[0];
