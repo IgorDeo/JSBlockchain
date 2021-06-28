@@ -43,7 +43,8 @@ const createEventListener = () => {
     // adding the event listener by looping
     elements.forEach(element => {
         const blockId = element.id;
-        const blockIndex = parseInt(blockId[blockId.length - 1]);
+        const blockInfo = blockId.split("-");
+        const blockIndex = blockInfo[1]
         const inputDataBlock = element.getElementsByClassName('data-input-block')[0];
         const mineButton = element.getElementsByClassName('mine-block-button')[0];
 
