@@ -13,7 +13,7 @@ const App = () => {
     const [blockchainPri, setBlock] = React.useState(blockchainObj.chain)
     return (
         <React.Fragment>
-            <BlockForm addNewBlock={(block) => (setBlock([... blockchainPri, blockchainObj.addBlock(new Block({value: block.data}, block.difficulty))]), console.log(blockchainPri))}/>
+            <BlockForm addNewBlock={(block) => (setBlock([... blockchainPri, blockchainObj.addBlock(new Block({value: block.data}, block.difficulty, blockchainObj.getLatestBlockIndex() + 1))]))}/>
             <GapDiv/>
             <BlockList blockchain={blockchainPri}/>
         </React.Fragment>

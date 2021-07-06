@@ -9,7 +9,7 @@ class Blockchain {
     createGenesisBlock() {
         let newBlock = new block({
             value: 'Genesis block'
-        }, "0");
+        }, "0", 0);
 
         newBlock.timeStamp = Date.now();
         return newBlock;
@@ -17,6 +17,10 @@ class Blockchain {
 
     getLatestBlock() {
         return this.chain[this.chain.length - 1];
+    }
+
+    getLatestBlockIndex() {
+        return this.chain[this.chain.length - 1].index;
     }
 
     addBlock(newBlock) {
