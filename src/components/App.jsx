@@ -1,16 +1,22 @@
 import React from "react"
 
-import blockForm from "./blockForm.jsx"
-// import blockDiv from "./blockDiv.jsx"
+import BlockForm from "./blockForm"
+import BlockList from "./blockList.jsx"
+import GapDiv from "./gapDiv.jsx"
 
-import blockchain from "../Blockchain.js"
+import Blockchain from "../Blockchain.js"
+
+const blockchain = new Blockchain();
+
+console.log(blockchain.chain)
 
 const App = () => {
+    // const [blockchain, setBlock] = React.useState([])
     return (
         <React.Fragment>
-            <blockForm/>
-            <hr/>
-            {/* <blockDiv/> */}
+            <BlockForm/>
+            <GapDiv/>
+            {/* <BlockList/> */}
         </React.Fragment>
     )
 }

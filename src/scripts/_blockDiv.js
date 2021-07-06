@@ -28,4 +28,4 @@ const blockDiv = (block) => {
     );
 }
 
-module.exports = blockDiv;
+export default blockDiv

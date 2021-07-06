@@ -1,5 +1,5 @@
 const SHA256 = require('crypto-js/sha256');
-const block = require('./Block.js').Block;
+import block from "./Block"
 
 class Blockchain {
     constructor() {
@@ -43,4 +43,4 @@ class Blockchain {
     }
 }
 
-module.exports = { Blockchain };
+export default Blockchain
