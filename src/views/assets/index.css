@@ -78,6 +78,7 @@ header h1{
     background-color: darkgrey;
     padding: 1rem;
     border-radius: 5%;
+    margin-left: 22%;
 }
 
 #blocks-div::-webkit-scrollbar {

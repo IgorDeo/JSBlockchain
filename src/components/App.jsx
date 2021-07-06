@@ -2,7 +2,7 @@ import React from "react"
 
 import BlockForm from "./blockForm"
 import BlockList from "./blockList.jsx"
-import GapDiv from "./gapDiv.jsx"
+
 
 import Block from "../Block.js"
 import Blockchain from "../Blockchain.js"
@@ -14,7 +14,6 @@ const App = () => {
     return (
         <React.Fragment>
             <BlockForm addNewBlock={(block) => (setBlock([... blockchainPri, blockchainObj.addBlock(new Block({value: block.data}, block.difficulty, blockchainObj.getLatestBlockIndex() + 1))]))}/>
-            <GapDiv/>
             <BlockList blockchain={blockchainPri}/>
         </React.Fragment>
     )
