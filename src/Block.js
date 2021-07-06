@@ -9,7 +9,7 @@ class Block {
         this.index = Block.index++;
         this.hash = this.calculateBlockHash();
         this.nonce = 0;
-        this.difficulty = difficulty;
+        this.difficulty = parseInt(difficulty);
     }
 
     calculateBlockHash() {
@@ -26,4 +26,4 @@ class Block {
     }
 }
 
-module.exports = { Block };
+export default Block

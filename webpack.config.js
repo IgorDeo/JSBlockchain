@@ -10,7 +10,7 @@ const stylesHandler = MiniCssExtractPlugin.loader;
 
 const srcDir        = path.join(__dirname,"./src")
 const distDir       = path.join(__dirname,"./build") // pode usar a dist
-const entry         = path.join(srcDir, "scripts/index.js" )
+const entry         = path.join(srcDir, "scripts/index.jsx" )
 const srcHtmlLayout = path.join(__dirname, "./src/views/index.html")
 
 
@@ -27,6 +27,10 @@ const config = {
     open: true,
     host: "localhost",
   
+  },
+  resolve: {
+    extensions: [".js", ".jsx", ".json"],
+    modules: [ "node_modules", srcDir ],
   },
   plugins: [
     new HtmlWebpackPlugin({
