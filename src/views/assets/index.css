@@ -60,7 +60,7 @@ header h1{
     border-radius: 5%;
 }
 
-.main-wrapper {
+#root {
     /* display: grid;
     grid-template-columns: 1fr 1fr;
     grid-gap: 20px; */

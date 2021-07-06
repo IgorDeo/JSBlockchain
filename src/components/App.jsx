@@ -4,19 +4,18 @@ import BlockForm from "./blockForm"
 import BlockList from "./blockList.jsx"
 import GapDiv from "./gapDiv.jsx"
 
+import Block from "../Block.js"
 import Blockchain from "../Blockchain.js"
 
-const blockchain = new Blockchain();
-
-console.log(blockchain.chain)
 
 const App = () => {
-    // const [blockchain, setBlock] = React.useState([])
+    let [blockchainObj, setBlockchainObj] = React.useState(new Blockchain())
+    const [blockchainPri, setBlock] = React.useState(blockchainObj.chain)
     return (
         <React.Fragment>
-            <BlockForm/>
+            <BlockForm addNewBlock={(block) => (setBlock([... blockchainPri, blockchainObj.addBlock(new Block({value: block.data}, block.difficulty))]), console.log(blockchainPri))}/>
             <GapDiv/>
-            {/* <BlockList/> */}
+            <BlockList blockchain={blockchainPri}/>
         </React.Fragment>
     )
 }

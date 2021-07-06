@@ -2,7 +2,7 @@ import React from "react"
 
 const gapDiv = () => {
     return (
-        <div>
+        <div id="gap-div">
 
         </div>
     )
