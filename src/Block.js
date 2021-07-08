@@ -18,10 +18,12 @@ class Block {
     }
 
     mineBlock() {
-        this.timeStamp = Date.now(); 
-        while (this.hash.substring(0, this.difficulty) !== Array(this.difficulty + 1).join("0")) {
-            this.nonce++;
+        this.timeStamp = Date.now();
+        let substring =  this.hash.substring(0, this.difficulty);
+        while ((substring !== Array(this.difficulty + 1).join("0")) && (substring[substring.len - 1] !== 0)) {
+            this.nonce++; 
             this.hash = this.calculateBlockHash();
+            substring =  this.hash.substring(0, this.difficulty);
         }
     }
 }
