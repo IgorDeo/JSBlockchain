@@ -1,7 +1,14 @@
+import React from "react";
+import ReactDOM from "react-dom";
+import { Provider } from "react-redux";
 
-import React from "react"
-import ReactDOM from "react-dom"
+import  App  from '../components/App.jsx'
+import store from "../ducks";
 
-import  App from '../components/App.jsx'
+const mainApp = (
+    <Provider store={store}>
+        <App />
+    </Provider>
+)
 
-ReactDOM.render(<App />, document.getElementById('root'))
+ReactDOM.render(mainApp , document.getElementById('root'));
