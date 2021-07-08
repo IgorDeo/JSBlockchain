@@ -13,6 +13,8 @@ body {
     align-items: center;
     justify-content: space-between;
     flex-direction: column;
+    
+    
 }
 
 form > input{
@@ -58,6 +60,8 @@ header h1{
 
 #root {
     display: inline-flex;
+    font-family: 'Roboto Mono';
+    color: #333;
 }
 
 
@@ -67,7 +71,7 @@ header h1{
     background-color: darkgrey;
     padding: 1rem;
     border-radius: 5%;
-    margin-left: 22%;
+    margin-left: 35%;
 }
 
 #blocks-div::-webkit-scrollbar {
