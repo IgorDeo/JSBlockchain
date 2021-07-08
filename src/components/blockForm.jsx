@@ -2,11 +2,12 @@ import React from "react"
 import { connect } from "react-redux"
 
 import BlockchainDuck from "../ducks/blockchainDuck"
+import PropTypes from "prop-types"
 
-const blockForm = ({addNewBlock}) => {
+const BlockForm = ({ addNewBlock }) => {
     const [data, setData] = React.useState("");
     const [difficulty, setDifficulty] = React.useState(0);
-    
+
     return (
         <div className="form-div">
             <form action="">
@@ -14,17 +15,25 @@ const blockForm = ({addNewBlock}) => {
                 <input type="text"
                     id="fdata"
                     name="fdata"
-                    onChange ={(evt) => setData(evt.target.value)}
+                    onChange={(evt) => setData(evt.target.value)}
                 ></input>
 
                 <label>Difficulty:</label><br></br>
-                <input type="number" id="fdifficulty" min ="1" name="fdifficulty" onChange ={(evt) => setDifficulty(evt.target.value)}></input>
-                
-                <button type="button" id="new-block-button" onClick={() => {console.log('add novo bloco: ',{data, difficulty}); addNewBlock({data, difficulty})}} >New Block</button>
+                <input type="number" id="fdifficulty" min="1" name="fdifficulty" onChange={(evt) => setDifficulty(evt.target.value)}></input>
+
+                <button type="button" id="new-block-button" onClick={() => { console.log('add novo bloco: ', { data, difficulty }); addNewBlock({ data, difficulty }) }} >New Block</button>
             </form>
-        </div> 
-        
+        </div>
+
     )
+}
+
+BlockForm.propTypes = {
+    addNewBlock: PropTypes.func
+}
+
+BlockForm.defaultProps = {
+    addNewBlock: () => undefined
 }
 
 // Camada de integração do componente com o redux
@@ -33,10 +42,10 @@ const mapStateToProps = () => ({})
 
 // Mapear Actions para o props
 const mapDispatchToProps = (dispatch) => ({
-  addNewBlock: ({ data, difficulty }) => dispatch(
-    BlockchainDuck.creators.addBlock(data, difficulty)
-    // ({ type: ...., name, age })
-  ) 
+    addNewBlock: ({ data, difficulty }) => dispatch(
+        BlockchainDuck.creators.addBlock(data, difficulty)
+        // ({ type: ...., name, age })
+    )
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(blockForm)
+export default connect(mapStateToProps, mapDispatchToProps)(BlockForm)

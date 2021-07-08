@@ -1,7 +1,10 @@
 import React from "react"
 import { connect } from "react-redux"
+import PropTypes from "prop-types"
+
 
 const Block = ({ block }) => {
+    console.log(block);
     return (
         <div className="block" id={"block-" + block.index}>
             <div>
@@ -11,7 +14,7 @@ const Block = ({ block }) => {
 
             <div>
                 <label>Data: </label>
-                <input className="data-input-block" type="text" defaultValue={block.data.value}></input>
+                <input className="data-input-block" type="text" disabled defaultValue={block.data.value}></input>
 
             </div>
 
@@ -35,7 +38,16 @@ const Block = ({ block }) => {
 
 }
 
-const mapStateToProps = () => ({})
+Block.propTypes = {
+    block: PropTypes.object
+}
+
+Block.defaultProps = {
+    block: undefined
+}
+
+const mapStateToProps = () => ({
+})
 
 const mapDispatchToProps = () => ({})
 

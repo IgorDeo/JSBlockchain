@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 
-import  App  from '../components/App.jsx'
+import App from '../components/App.jsx'
 import store from "../ducks";
 
 const mainApp = (
@@ -11,4 +11,4 @@ const mainApp = (
     </Provider>
 )
 
-ReactDOM.render(mainApp , document.getElementById('root'));
+ReactDOM.render(mainApp, document.getElementById('root'));
